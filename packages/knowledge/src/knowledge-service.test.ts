@@ -39,9 +39,9 @@ function createClient(): VapiKnowledgeApi {
   let fileNumber = 0;
   return {
     uploadFile: vi.fn(async () => ({ id: `file-${++fileNumber}` })),
-    createKnowledgeBase: vi.fn(async () => ({ id: "kb-1" })),
-    updateKnowledgeBase: vi.fn(async () => undefined),
-    attachKnowledgeBaseToAssistant: vi.fn(async () => undefined),
+    createQueryTool: vi.fn(async () => ({ id: "tool-1" })),
+    updateQueryTool: vi.fn(async () => undefined),
+    attachQueryToolToAssistant: vi.fn(async () => undefined),
   };
 }
 
@@ -101,15 +101,15 @@ describe("knowledge synchronization", () => {
     expect(beforeUpdate.files[0]?.change).toBe("modified");
     expect(modified.uploadedFiles).toBe(1);
     expect(client.uploadFile).toHaveBeenCalledTimes(2);
-    expect(client.createKnowledgeBase).toHaveBeenCalledTimes(1);
-    expect(client.updateKnowledgeBase).toHaveBeenCalledTimes(1);
-    expect(client.attachKnowledgeBaseToAssistant).toHaveBeenCalledTimes(1);
+    expect(client.createQueryTool).toHaveBeenCalledTimes(1);
+    expect(client.updateQueryTool).toHaveBeenCalledTimes(1);
+    expect(client.attachQueryToolToAssistant).toHaveBeenCalledTimes(1);
 
     const state = await readFile(
       join(directory, ".vokli", "state.json"),
       "utf8",
     );
-    expect(state).toContain('"knowledgeBaseId": "kb-1"');
+    expect(state).toContain('"queryToolId": "tool-1"');
     expect(state).toContain('"vapiFileId": "file-2"');
     expect(state).toContain('"lastSyncedAt": "2026-07-17T12:00:00.000Z"');
     expect(state).not.toContain("Modified services");
@@ -133,7 +133,7 @@ describe("knowledge synchronization", () => {
     await service.sync(agent);
 
     await writeFile(sourcePath, "Second version");
-    vi.mocked(client.updateKnowledgeBase).mockRejectedValueOnce(
+    vi.mocked(client.updateQueryTool!).mockRejectedValueOnce(
       new Error("Temporary Vapi failure"),
     );
     await expect(service.sync(agent)).rejects.toThrow("Temporary Vapi failure");
@@ -141,6 +141,6 @@ describe("knowledge synchronization", () => {
 
     expect(recovered.uploadedFiles).toBe(0);
     expect(client.uploadFile).toHaveBeenCalledTimes(2);
-    expect(client.updateKnowledgeBase).toHaveBeenCalledTimes(2);
+    expect(client.updateQueryTool).toHaveBeenCalledTimes(2);
   });
 });

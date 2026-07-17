@@ -1,4 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { mkdtemp, readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { describe, expect, it, vi } from "vitest";
+import type { VapiApi } from "@vokli/vapi";
 
 import { createVokli, receptionist, VokliValidationError } from "./index.js";
 
@@ -20,6 +24,55 @@ const validAgent = receptionist({
 });
 
 describe("createVokli", () => {
+  it("supports local validation without options", () => {
+    expect(createVokli().validate(validAgent).success).toBe(true);
+    expect(() => createVokli().generate(validAgent)).toThrow(
+      /model and voice/i,
+    );
+  });
+
+  it("creates, skips, and updates an assistant using state identity", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "vokli-deploy-"));
+    const client = createApi();
+    const vokli = createVokli({
+      ...options,
+      provider: { type: "vapi", client },
+      knowledge: { cwd: directory },
+    });
+    const created = await vokli.deploy(validAgent);
+    const unchanged = await vokli.deploy(validAgent);
+    const updated = await vokli.deploy({
+      ...validAgent,
+      greeting: "A changed greeting",
+    });
+    expect(created).toMatchObject({
+      created: true,
+      assistantId: "assistant-1",
+    });
+    expect(unchanged).toMatchObject({ unchanged: true });
+    expect(updated).toMatchObject({
+      updated: true,
+      assistantId: "assistant-1",
+    });
+    expect(client.createAssistant).toHaveBeenCalledTimes(1);
+    expect(client.updateAssistant).toHaveBeenCalledTimes(1);
+  });
+
+  it("dry-runs without a key, HTTP, or state write", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "vokli-dry-"));
+    const result = await createVokli({
+      ...options,
+      knowledge: { cwd: directory },
+    }).deploy(validAgent, { dryRun: true });
+    expect(result).toMatchObject({
+      dryRun: true,
+      planned: "create",
+      created: false,
+    });
+    await expect(
+      readFile(join(directory, ".vokli", "state.json")),
+    ).rejects.toMatchObject({ code: "ENOENT" });
+  });
   it("creates an immutable instance with validation and generation", () => {
     const vokli = createVokli(options);
 
@@ -62,3 +115,15 @@ describe("createVokli", () => {
     }
   });
 });
+
+function createApi(): VapiApi {
+  return {
+    createAssistant: vi.fn(async () => ({ id: "assistant-1" })),
+    getAssistant: vi.fn(async (id) => ({ id, model: {} })),
+    updateAssistant: vi.fn(async (id) => ({ id })),
+    uploadFile: vi.fn(async () => ({ id: "file-1" })),
+    createQueryTool: vi.fn(async () => ({ id: "tool-1" })),
+    updateQueryTool: vi.fn(async () => undefined),
+    attachQueryToolToAssistant: vi.fn(async () => undefined),
+  };
+}
