@@ -4,10 +4,43 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f6f1e8">
-    <meta name="description" content="Vokli is an open-source TypeScript SDK for building reusable Vapi voice agents with explicit configuration and less repetitive plumbing.">
+    <meta name="description" content="Vokli is an open-source TypeScript SDK for building reusable Vapi voice agents with validated business definitions, deterministic prompts and incremental knowledge synchronization.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://quenumgerald.github.io/vokli/">
+    <link rel="icon" href="./favicon.ico" sizes="any">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <link rel="manifest" href="./site.webmanifest">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vokli">
+    <meta property="og:url" content="https://quenumgerald.github.io/vokli/">
     <meta property="og:title" content="Vokli — Build Vapi agents in minutes">
-    <meta property="og:description" content="An open-source TypeScript SDK for reusable voice-agent definitions, deterministic prompts and Vapi integrations.">
+    <meta property="og:description" content="Open-source TypeScript SDK for reusable Vapi agents, deterministic prompts and explicit provider configuration.">
+    <meta property="og:image" content="https://quenumgerald.github.io/vokli/vokli-social.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Vokli — Build production-ready Vapi agents in minutes.">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vokli — Build Vapi agents in minutes">
+    <meta name="twitter:description" content="Open-source TypeScript SDK for reusable Vapi agents, deterministic prompts and explicit provider configuration.">
+    <meta name="twitter:image" content="https://quenumgerald.github.io/vokli/vokli-social.png">
+
     <title>Vokli — Open-source TypeScript SDK for Vapi agents</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Vokli",
+        "description": "Open-source TypeScript SDK for building reusable Vapi voice agents.",
+        "codeRepository": "https://github.com/QuenumGerald/vokli",
+        "programmingLanguage": "TypeScript",
+        "runtimePlatform": "Node.js 22+",
+        "license": "https://opensource.org/license/mit",
+        "url": "https://quenumgerald.github.io/vokli/"
+      }
+    </script>
     <style>
       :root {
         --paper: #f6f1e8;
@@ -209,13 +242,6 @@
       .comment { color: #77736d; }
       .code-note { padding: 0 28px 24px; color: #9c978f; font: 500 .78rem/1.5 ui-monospace, monospace; }
 
-      .status-band { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-      .status-grid { display: grid; grid-template-columns: 1.3fr repeat(3, 1fr); }
-      .status-cell { min-height: 142px; padding: 28px; border-right: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
-      .status-cell:last-child { border-right: 0; }
-      .status-kicker { color: var(--orange-dark); font: 750 .78rem ui-monospace, monospace; text-transform: uppercase; letter-spacing: .08em; }
-      .status-value { font-size: 1.35rem; font-weight: 850; line-height: 1.18; }
-
       section.content { padding: 118px 0; border-bottom: 1px solid var(--line); }
       .section-head { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; margin-bottom: 64px; }
       .section-label { color: var(--orange-dark); font: 750 .8rem ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; }
@@ -264,11 +290,7 @@
       @media (max-width: 980px) {
         .hero { grid-template-columns: 1fr; padding-top: 50px; }
         .visual { min-height: 520px; }
-        .code-card { max-width: 760px; margin: 160px auto 0; }
-        .status-grid { grid-template-columns: repeat(2, 1fr); }
-        .status-cell:nth-child(2) { border-right: 0; }
-        .status-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-        .section-head { grid-template-columns: 1fr; gap: 20px; }
+        .code-card { max-width: 760px; margin: 160px auto 0; }        .section-head { grid-template-columns: 1fr; gap: 20px; }
         .feature-grid, .roadmap { grid-template-columns: 1fr; }
         .feature { min-height: 240px; border-right: 0; border-bottom: 1px solid var(--line); }
         .feature:last-child { border-bottom: 0; }
@@ -288,11 +310,7 @@
         .dot-grid { display: none; }
         .code-card { margin-top: 100px; }
         pre { padding: 20px; font-size: .72rem; }
-        .code-note { padding: 0 20px 20px; }
-        .status-grid { grid-template-columns: 1fr; }
-        .status-cell { border-right: 0; border-bottom: 1px solid var(--line) !important; }
-        .status-cell:last-child { border-bottom: 0 !important; }
-        section.content { padding: 82px 0; }
+        .code-note { padding: 0 20px 20px; }        section.content { padding: 82px 0; }
         .feature { padding: 28px; }
         .flow { grid-template-columns: 1fr; }
         .flow-step:not(:last-child)::after { content: "↓"; right: auto; left: 0; top: auto; bottom: -18px; }
@@ -356,15 +374,6 @@
 <span class="kw">const</span> generated = vokli.<span class="fn">generate</span>(agent);</code></pre>
             <div class="code-note">Local generation is available now. Real Vapi deployment is the next implementation milestone.</div>
           </div>
-        </div>
-      </section>
-
-      <section class="status-band" aria-label="Project status">
-        <div class="shell status-grid">
-          <div class="status-cell"><span class="status-kicker">Current status</span><span class="status-value">Early-stage SDK<br>built in public</span></div>
-          <div class="status-cell"><span class="status-kicker">Available</span><span class="status-value">Receptionist<br>definitions</span></div>
-          <div class="status-cell"><span class="status-kicker">Available</span><span class="status-value">Validation &<br>local generation</span></div>
-          <div class="status-cell"><span class="status-kicker">In progress</span><span class="status-value">Real Vapi<br>deployment</span></div>
         </div>
       </section>
 
