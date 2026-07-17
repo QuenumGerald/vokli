@@ -1,0 +1,24 @@
+{
+  "name": "@vokli/sdk",
+  "version": "0.4.0",
+  "private": false,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@vokli/core": "workspace:*",
+    "@vokli/vapi": "workspace:*",
+    "@vokli/knowledge": "workspace:*"
+  }
+}
