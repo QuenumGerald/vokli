@@ -20,6 +20,7 @@ export interface KnowledgeStatus {
   readonly configured: boolean;
   readonly files: readonly KnowledgeFileStatus[];
   readonly knowledgeBaseId?: string;
+  readonly queryToolId?: string;
   readonly lastSyncedAt?: string;
   readonly pendingKnowledgeBaseUpdate?: boolean;
 }

@@ -105,6 +105,9 @@ export function createKnowledgeService(
         client: options.client,
         statePath,
         syncedAt: now().toISOString(),
+        ...(inspected.state?.assistantId
+          ? { deployedAssistantId: inspected.state.assistantId }
+          : {}),
       });
     },
   };

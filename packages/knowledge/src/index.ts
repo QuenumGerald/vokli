@@ -1,6 +1,11 @@
 export type { KnowledgeProvider, VapiKnowledgeProvider } from "@vokli/core";
 export type { VapiKnowledgeApi, VapiFileUpload } from "./knowledge-api.js";
 export {
+  readKnowledgeState,
+  writeAgentKnowledgeState,
+} from "./knowledge-state.js";
+export type { AgentKnowledgeState, VokliState } from "./knowledge-state.js";
+export {
   createKnowledgeService,
   KnowledgeSyncError,
 } from "./knowledge-service.js";

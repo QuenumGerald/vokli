@@ -39,7 +39,13 @@ export type {
 export { createVokli } from "./create-vokli.js";
 export type {
   CreateVokliOptions,
+  DeploymentResult,
+  DeploymentDryRunResult,
+  DeployOptions,
   GeneratedAgent,
   Vokli,
 } from "./create-vokli.js";
+export { DeploymentError } from "./create-vokli.js";
 export { VokliValidationError } from "./vokli-validation-error.js";
+export { VokliValidationError as ValidationError } from "./vokli-validation-error.js";
+export { ProviderError } from "@vokli/vapi";

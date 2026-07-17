@@ -13,11 +13,12 @@ export function createKnowledgeStatus(
   return {
     configured: true,
     files: createFileStatuses(documents, state),
-    ...(state?.knowledgeBaseId
-      ? { knowledgeBaseId: state.knowledgeBaseId }
+    ...(state?.legacyKnowledgeBaseId
+      ? { knowledgeBaseId: state.legacyKnowledgeBaseId }
       : {}),
+    ...(state?.queryToolId ? { queryToolId: state.queryToolId } : {}),
     ...(state?.lastSyncedAt ? { lastSyncedAt: state.lastSyncedAt } : {}),
-    ...(state?.pendingKnowledgeBaseUpdate
+    ...(state?.pending?.includes("query-tool")
       ? { pendingKnowledgeBaseUpdate: true }
       : {}),
   };

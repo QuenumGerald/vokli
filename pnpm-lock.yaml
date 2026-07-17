@@ -68,6 +68,9 @@ importers:
 
   packages/vapi:
     dependencies:
+      '@vapi-ai/server-sdk':
+        specifier: 1.2.0
+        version: 1.2.0
       '@vokli/core':
         specifier: workspace:*
         version: link:../core
@@ -489,6 +492,10 @@ packages:
   '@typescript-eslint/visitor-keys@8.64.0':
     resolution: {integrity: sha512-mrtuL8Nsn6gi2H4mo5KMTp823M+3Q19Ew/i+Zlikq20tIMm99C3Ez0dCmkWWnxut20esQvTg8aUSEhMcAOXhEw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@vapi-ai/server-sdk@1.2.0':
+    resolution: {integrity: sha512-0Ys/MEs+JoxmKQ/bTzMHUCJvzEWu+/XcFiN2m/GjTqVB2Uwv8Vi91D1/YGbRUH+q1aCBSH3g+yIOFroDDlJF1A==}
+    engines: {node: '>=18.0.0'}
 
   '@vitest/expect@3.2.7':
     resolution: {integrity: sha512-E8eBXaKibuvH2pSZErOjdVb5vF4PbKYcrnluBTYxEk1l/VhhwZg1kZQsdtjq+CsF5CFydf2Rdkz7jDHKSisi3w==}
@@ -1372,6 +1379,8 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.64.0
       eslint-visitor-keys: 5.0.1
+
+  '@vapi-ai/server-sdk@1.2.0': {}
 
   '@vitest/expect@3.2.7':
     dependencies:
