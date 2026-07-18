@@ -69,6 +69,7 @@ describe("createVokli", () => {
       planned: "create",
       created: false,
     });
+    expect(result).not.toHaveProperty("assistantId");
     await expect(
       readFile(join(directory, ".vokli", "state.json")),
     ).rejects.toMatchObject({ code: "ENOENT" });
