@@ -6,6 +6,7 @@
     { "path": "packages/testing" },
     { "path": "packages/vapi" },
     { "path": "packages/sdk" },
-    { "path": "examples/basic" }
+    { "path": "examples/basic" },
+    { "path": "examples/secretariat" }
   ]
 }

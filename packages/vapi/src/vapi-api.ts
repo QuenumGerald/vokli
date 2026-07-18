@@ -1,4 +1,4 @@
-import { createReadStream } from "node:fs";
+
 import { VapiClient, VapiError, type Vapi } from "@vapi-ai/server-sdk";
 
 export interface AssistantSnapshot {
@@ -133,7 +133,11 @@ export function createVapiApi(options: {
         "upload file",
         () =>
           client.files.create({
-            file: createReadStream(input.path),
+            file: {
+              data: input.content,
+              filename: input.fileName,
+              contentType: getMimeType(input.fileName),
+            },
           }) as Promise<{ id: string }>,
       ),
     createQueryTool: (input) =>
@@ -174,3 +178,22 @@ export function createVapiApi(options: {
       }),
   };
 }
+
+function getMimeType(fileName: string): string {
+  const ext = fileName.split(".").pop()?.toLowerCase();
+  switch (ext) {
+    case "md":
+      return "text/markdown";
+    case "txt":
+      return "text/plain";
+    case "pdf":
+      return "application/pdf";
+    case "doc":
+      return "application/msword";
+    case "docx":
+      return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    default:
+      return "application/octet-stream";
+  }
+}
+
