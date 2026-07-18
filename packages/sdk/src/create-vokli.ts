@@ -37,8 +37,13 @@ export interface DeploymentResult {
   readonly assistantId: string;
   readonly deployedAt?: string;
 }
-export interface DeploymentDryRunResult extends DeploymentResult {
+export interface DeploymentDryRunResult extends Omit<
+  DeploymentResult,
+  "assistantId"
+> {
   readonly dryRun: true;
+  /** Present only when an existing remote assistant is known from local state. */
+  readonly assistantId?: string;
   readonly hash: string;
   readonly configuration: GeneratedVapiResources;
   readonly planned: "create" | "update" | "unchanged" | "unknown";
@@ -154,7 +159,9 @@ export function createVokli(options: CreateVokliOptions = {}): Vokli {
           created: false,
           updated: false,
           unchanged: planned === "unchanged",
-          assistantId: previous?.assistantId ?? "dry-run:not-created",
+          ...(previous?.assistantId
+            ? { assistantId: previous.assistantId }
+            : {}),
           hash,
           configuration: generated.providerConfig,
           planned,

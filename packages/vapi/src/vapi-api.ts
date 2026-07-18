@@ -56,8 +56,10 @@ export function createVapiApi(options: {
   apiKey: string;
   timeoutMs?: number;
 }): VapiApi {
-  const client = new VapiClient({ token: options.apiKey });
   const request = { timeoutInSeconds: (options.timeoutMs ?? 60_000) / 1000 };
+  // Configure the client rather than selected requests so the same timeout also
+  // covers assistant creation/updates, file uploads, and Query Tool mutations.
+  const client = new VapiClient({ token: options.apiKey, ...request });
   const run = async <T>(
     operation: string,
     action: () => Promise<T>,
@@ -67,7 +69,8 @@ export function createVapiApi(options: {
     } catch (cause) {
       const status = cause instanceof VapiError ? cause.statusCode : undefined;
       const timeout =
-        cause instanceof Error && /timeout|abort/i.test(cause.message);
+        cause instanceof Error &&
+        /timeout|timed out|abort/i.test(cause.message);
       throw new ProviderError(
         operation,
         `Vapi ${operation} failed${status ? ` (HTTP ${status})` : ""}. Check credentials, configuration, and retry when appropriate.`,
