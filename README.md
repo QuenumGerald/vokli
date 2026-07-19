@@ -14,7 +14,7 @@ To run and deploy the included example agent to Vapi, ensure you have your `VAPI
 
 ```bash
 # Install all dependencies across workspaces
-npm install
+npm i volkli-sdk
 
 # Compile the packages and example
 npm run build
@@ -132,7 +132,7 @@ If your configuration file exports multiple agents (either in an array or as sep
 The project is structured as an npm monorepo. Use the following commands to build, format, lint, and test:
 
 ```bash
-npm install
+npm i volkli-sdk
 npm run build
 npm test
 npm run lint

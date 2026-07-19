@@ -25,7 +25,7 @@ remote identity by assistant name.
 Install the public package with:
 
 ```bash
-npm install volkli-sdk
+npm i volkli-sdk
 ```
 
 Then import the SDK from `volkli-sdk`:

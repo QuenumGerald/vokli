@@ -2,6 +2,12 @@
 
 All notable changes will be documented here.
 
+## 1.0.1 - 2026-07-19
+
+- Publish the package as `volkli-sdk`.
+- Update the README and knowledge-base docs with the correct install command.
+- Keep the `vokli` CLI name while using `volkli-sdk` as the npm package name.
+
 ## 0.4.0 - 2026-07-17
 
 - Add `vapiKnowledge()` and the `vokli.knowledge` validation, status, and
