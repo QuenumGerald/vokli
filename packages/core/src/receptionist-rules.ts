@@ -1,5 +1,5 @@
 export const RECEPTIONIST_RESPONSIBILITIES = [
-  "Act as the business receptionist and welcome every caller.",
+  "Act as the business agent and welcome every caller.",
   "Understand the caller's request and provide only available business information.",
   "Collect the requested information naturally during the conversation.",
 ] as const;

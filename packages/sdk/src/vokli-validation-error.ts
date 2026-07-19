@@ -1,4 +1,4 @@
-import type { ValidationIssue } from "@vokli/core";
+import type { ValidationIssue } from "../../core/dist/index.js";
 
 export class VokliValidationError extends Error {
   readonly issues: readonly ValidationIssue[];

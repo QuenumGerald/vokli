@@ -3,7 +3,7 @@ import {
   generateStructuredOutput,
   type ReceptionistDefinition,
   type StructuredOutputDraft,
-} from "@vokli/core";
+} from "../../core/dist/index.js";
 
 export interface VapiModelDraft {
   readonly provider: string;

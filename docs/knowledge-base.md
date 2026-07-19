@@ -22,6 +22,18 @@ atomically. Version 1 is validated and migrated. Corrupt state is rejected
 rather than overwritten. Keep/backup this file: without it Vokli does not guess
 remote identity by assistant name.
 
+Install the public package with:
+
+```bash
+npm install vokli
+```
+
+Then import the SDK from `vokli`:
+
+```ts
+import { createVokli, agent, vapiKnowledge } from "vokli";
+```
+
 A changed document produces a new remote file; remote file deletion is not
 implemented. Calls, webhooks, transfers, business Tools and real-time data are
 also outside the current scope.

@@ -8,7 +8,7 @@ import {
   RECEPTIONIST_SAFETY_RULES,
 } from "./receptionist-rules.js";
 
-export function receptionist(input: ReceptionistInput): ReceptionistDefinition {
+export function agent(input: ReceptionistInput): ReceptionistDefinition {
   return {
     kind: "receptionist",
     id: input.id,

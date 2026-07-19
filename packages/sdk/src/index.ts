@@ -13,13 +13,13 @@ export type {
   ToolDefinition,
   ValidationIssue,
   ValidationResult,
-} from "@vokli/core";
-export { receptionist } from "@vokli/core";
+} from "../../core/dist/index.js";
+export { agent, generateReceptionistPrompt, validateAgent } from "../../core/dist/index.js";
 export {
   KnowledgeSyncError,
   SUPPORTED_KNOWLEDGE_EXTENSIONS,
   vapiKnowledge,
-} from "@vokli/knowledge";
+} from "../../knowledge/dist/index.js";
 export type {
   CreateKnowledgeServiceOptions,
   KnowledgeFileStatus,
@@ -30,12 +30,12 @@ export type {
   KnowledgeValidationResult,
   VapiKnowledgeApi,
   VapiKnowledgeOptions,
-} from "@vokli/knowledge";
+} from "../../knowledge/dist/index.js";
 export type {
   GeneratedVapiResources,
   VapiAssistantDraft,
   VapiGenerationOptions,
-} from "@vokli/vapi";
+} from "../../vapi/dist/index.js";
 export { createVokli } from "./create-vokli.js";
 export type {
   CreateVokliOptions,
@@ -48,4 +48,4 @@ export type {
 export { DeploymentError } from "./create-vokli.js";
 export { VokliValidationError } from "./vokli-validation-error.js";
 export { VokliValidationError as ValidationError } from "./vokli-validation-error.js";
-export { ProviderError } from "@vokli/vapi";
+export { ProviderError } from "../../vapi/dist/index.js";

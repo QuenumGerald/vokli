@@ -1,4 +1,4 @@
-import type { AgentDefinition } from "@vokli/core";
+import type { AgentDefinition } from "../../core/dist/index.js";
 
 export interface DeploymentResult {
   readonly provider: "vapi";

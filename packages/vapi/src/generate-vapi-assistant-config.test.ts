@@ -1,9 +1,9 @@
-import { receptionist } from "@vokli/core";
+import { agent } from "@vokli/core";
 import { describe, expect, it, vi } from "vitest";
 
 import { generateVapiAssistantConfig } from "./generate-vapi-assistant-config.js";
 
-const agent = receptionist({
+const definition = agent({
   id: "sample-business",
   business: {
     name: "Sample Business",
@@ -28,11 +28,11 @@ const options = {
 
 describe("generateVapiAssistantConfig", () => {
   it("creates separate local assistant and structured-output drafts", () => {
-    const resources = generateVapiAssistantConfig(agent, options);
+    const resources = generateVapiAssistantConfig(definition, options);
 
     expect(resources.assistant).toMatchObject({
       name: "sample-business",
-      firstMessage: agent.greeting,
+      firstMessage: definition.greeting,
       model: options.model,
       voice: options.voice,
     });
@@ -47,8 +47,8 @@ describe("generateVapiAssistantConfig", () => {
 
   it("is pure and makes no network request", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
-    const first = generateVapiAssistantConfig(agent, options);
-    const second = generateVapiAssistantConfig(agent, options);
+    const first = generateVapiAssistantConfig(definition, options);
+    const second = generateVapiAssistantConfig(definition, options);
 
     expect(second).toEqual(first);
     expect(fetchSpy).not.toHaveBeenCalled();

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { receptionist } from "./receptionist.js";
+import { agent } from "./receptionist.js";
 import { createTestReceptionist } from "./test-agent.js";
 import { validateAgent } from "./validate-agent.js";
 
@@ -12,7 +12,7 @@ function issueFor(agent: unknown, path: string) {
 }
 
 describe("validateAgent", () => {
-  it("accepts a valid receptionist definition", () => {
+  it("accepts a valid agent definition", () => {
     const agent = createTestReceptionist();
     expect(validateAgent(agent)).toEqual({ success: true, data: agent });
   });
@@ -41,14 +41,14 @@ describe("validateAgent", () => {
   });
 
   it("accepts chronological time ranges", () => {
-    const agent = receptionist({
+    const definition = agent({
       ...createTestReceptionist(),
       business: {
         ...createTestReceptionist().business,
         openingHours: { monday: ["08:00-12:00", "14:00-18:00"] },
       },
     });
-    expect(validateAgent(agent).success).toBe(true);
+    expect(validateAgent(definition).success).toBe(true);
   });
 
   it("rejects invalid time values and reversed ranges", () => {

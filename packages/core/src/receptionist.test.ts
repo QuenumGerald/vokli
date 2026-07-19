@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { receptionist } from "./receptionist.js";
+import { agent } from "./receptionist.js";
 import { createTestReceptionist } from "./test-agent.js";
 
-describe("receptionist", () => {
+describe("agent", () => {
   it("creates an explicit definition with default and custom rules", () => {
     const agent = createTestReceptionist();
 
@@ -16,8 +16,8 @@ describe("receptionist", () => {
 
   it("does not mutate input arrays", () => {
     const rules = ["Keep this rule."];
-    const agent = receptionist({ ...createTestReceptionist(), rules });
+    const definition = agent({ ...createTestReceptionist(), rules });
     rules.push("Added later.");
-    expect(agent.customRules).toEqual(["Keep this rule."]);
+    expect(definition.customRules).toEqual(["Keep this rule."]);
   });
 });

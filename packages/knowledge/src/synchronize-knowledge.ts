@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { basename } from "node:path";
-import type { AgentDefinition } from "@vokli/core";
+import type { AgentDefinition } from "../../core/dist/index.js";
 import type { VapiKnowledgeApi } from "./knowledge-api.js";
 import type { KnowledgeDocument } from "./knowledge-files.js";
 import type {

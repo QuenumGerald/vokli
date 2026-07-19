@@ -93,15 +93,15 @@ const receptionistSchema: z.ZodType<AgentDefinition> = z.object({
   ),
   responsibilities: requiredRulesSchema(
     RECEPTIONIST_RESPONSIBILITIES,
-    "Expected the default receptionist responsibilities.",
+    "Expected the default agent responsibilities.",
   ),
   conversationRules: requiredRulesSchema(
     RECEPTIONIST_CONVERSATION_RULES,
-    "Expected the default receptionist conversation rules.",
+    "Expected the default agent conversation rules.",
   ),
   safetyRules: requiredRulesSchema(
     RECEPTIONIST_SAFETY_RULES,
-    "Expected the default receptionist safety rules.",
+    "Expected the default agent safety rules.",
   ),
   customRules: z.array(requiredText),
   knowledge: z

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { generateReceptionistPrompt } from "./generate-receptionist-prompt.js";
-import { receptionist } from "./receptionist.js";
+import { agent } from "./receptionist.js";
 import { createTestReceptionist } from "./test-agent.js";
 
 describe("generateReceptionistPrompt", () => {
@@ -23,7 +23,7 @@ describe("generateReceptionistPrompt", () => {
 
   it("omits optional empty sections", () => {
     const base = createTestReceptionist();
-    const agent = receptionist({
+    const definition = agent({
       id: base.id,
       business: {
         name: base.business.name,
@@ -32,7 +32,7 @@ describe("generateReceptionistPrompt", () => {
       },
       greeting: base.greeting,
     });
-    const prompt = generateReceptionistPrompt(agent);
+    const prompt = generateReceptionistPrompt(definition);
 
     expect(prompt).not.toContain("# Opening hours");
     expect(prompt).not.toContain("# Information to collect");
@@ -40,7 +40,7 @@ describe("generateReceptionistPrompt", () => {
   });
 });
 
-describe("receptionist knowledge prompt", () => {
+describe("agent knowledge prompt", () => {
   it("separates static knowledge from real-time tool data", () => {
     const agent = {
       ...createTestReceptionist(),

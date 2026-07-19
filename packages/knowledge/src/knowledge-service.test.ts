@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-import { receptionist } from "@vokli/core";
+import { agent } from "@vokli/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { VapiKnowledgeApi } from "./knowledge-api.js";
@@ -23,7 +23,7 @@ afterEach(async () => {
 });
 
 function createAgent(sources: readonly string[], assistantId = "assistant-1") {
-  return receptionist({
+  return agent({
     id: "sample-business",
     business: {
       name: "Sample Business",

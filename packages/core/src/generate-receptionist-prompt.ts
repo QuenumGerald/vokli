@@ -16,7 +16,7 @@ export function generateReceptionistPrompt(
 ): string {
   const sections = [
     section("Identity", [
-      `You are the receptionist for ${agent.business.name}.`,
+      `You are the business agent for ${agent.business.name}.`,
       `Always speak in ${agent.business.language}.`,
     ]),
     section("Business", [

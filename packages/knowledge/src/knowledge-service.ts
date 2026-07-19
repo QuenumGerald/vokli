@@ -1,6 +1,6 @@
 import { join } from "node:path";
 
-import type { AgentDefinition } from "@vokli/core";
+import type { AgentDefinition } from "../../core/dist/index.js";
 
 import type { VapiKnowledgeApi } from "./knowledge-api.js";
 import { inspectKnowledgeFiles } from "./knowledge-files.js";

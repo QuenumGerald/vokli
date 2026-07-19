@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { createVokli, receptionist, vapiKnowledge } from "@vokli/sdk";
+import { createVokli, agent, vapiKnowledge } from "vokli";
 
-export const agent = receptionist({
+export const definition = agent({
   id: "helpdesk-telecom-b2b",
   business: {
     name: "Support Informatique et Téléphonie",

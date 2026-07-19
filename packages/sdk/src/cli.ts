@@ -5,7 +5,7 @@ import fs from "node:fs";
 import readline from "node:readline";
 import { createJiti } from "jiti";
 import { createVokli } from "./create-vokli.js";
-import type { ReceptionistDefinition } from "@vokli/core";
+import type { ReceptionistDefinition } from "../../core/dist/index.js";
 
 function promptUser(query: string): Promise<string> {
   const rl = readline.createInterface({

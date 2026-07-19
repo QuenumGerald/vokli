@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import type { VapiApi } from "@vokli/vapi";
 
-import { createVokli, receptionist, VokliValidationError } from "./index.js";
+import { createVokli, agent, VokliValidationError } from "./index.js";
 
 const options = {
   vapi: {
@@ -13,7 +13,7 @@ const options = {
   },
 };
 
-const validAgent = receptionist({
+const validAgent = agent({
   id: "sample-business",
   business: {
     name: "Sample Business",

@@ -16,7 +16,7 @@ export type {
   VapiKnowledgeProvider,
 } from "./knowledge-provider.js";
 export type { OpeningHours, Weekday } from "./opening-hours.js";
-export { receptionist } from "./receptionist.js";
+export { agent } from "./receptionist.js";
 export { generateStructuredOutput } from "./structured-output.js";
 export type {
   JsonSchemaProperty,

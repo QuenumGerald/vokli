@@ -1,4 +1,4 @@
-export type { KnowledgeProvider, VapiKnowledgeProvider } from "@vokli/core";
+export type { KnowledgeProvider, VapiKnowledgeProvider } from "../../core/dist/index.js";
 export type { VapiKnowledgeApi, VapiFileUpload } from "./knowledge-api.js";
 export {
   readKnowledgeState,

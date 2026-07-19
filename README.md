@@ -1,6 +1,8 @@
 # Vokli
 
-Vokli is an open-source TypeScript SDK for defining receptionist agents,
+![Kli mascot](./kli.png)
+
+Vokli is an open-source TypeScript SDK for defining business agents,
 generating deterministic Vapi assistant configuration, deploying it, and
 synchronizing static documents. It is **not yet a complete production voice
 platform**: calls, webhooks, business Tools, transfers, and remote-state
@@ -26,14 +28,14 @@ npm start -w examples/secretariat
 ## Local use and deployment (SDK)
 
 ```ts
-import { createVokli, receptionist, vapiKnowledge } from "@vokli/sdk";
+import { createVokli, agent, vapiKnowledge } from "vokli";
 
 // Initialize Vokli (uses Google Gemini and Azure BrigitteNeural defaults automatically)
 const vokli = createVokli({
   provider: { type: "vapi", apiKey: process.env.VAPI_API_KEY! },
 });
 
-const agent = receptionist({
+const definition = agent({
   id: "garage-martin",
   business: {
     name: "Garage Martin",
@@ -50,8 +52,8 @@ const agent = receptionist({
   transcriber: { provider: "soniox", model: "stt-rt-v5", language: "fr" },
 });
 
-const result = await vokli.deploy(agent);
-await vokli.knowledge.sync(agent); // automatically uses result.assistantId
+const result = await vokli.deploy(definition);
+await vokli.knowledge.sync(definition); // automatically uses result.assistantId
 ```
 
 `createVokli()` remains valid for `version` and `validate()`. `generate()` needs
@@ -98,9 +100,9 @@ Ensure your configuration file exports your agent(s) (either as a `default` expo
 
 ```ts
 // vokli.config.ts
-import { receptionist } from "@vokli/sdk";
+import { agent } from "vokli";
 
-export const agent = receptionist({
+export const definition = agent({
   id: "helpdesk-telecom-b2b",
   // ... agent config
 });

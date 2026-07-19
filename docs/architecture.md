@@ -3,8 +3,8 @@
 `@vokli/core` owns definitions, validation, prompts and schemas. `@vokli/vapi`
 owns deterministic Vapi drafts plus the narrow official server-SDK adapter.
 `@vokli/knowledge` owns files, Query Tool synchronization and unified state.
-`@vokli/sdk` composes these into `createVokli`, `generate`, `deploy`, and
-`knowledge`.
+`vokli` is the published top-level package that composes these into
+`createVokli`, `generate`, `deploy`, and `knowledge`.
 
 The SDK-specific DTOs stop at `@vokli/vapi`; its small `VapiApi` boundary is
 injected in offline tests and shared by deployment and knowledge

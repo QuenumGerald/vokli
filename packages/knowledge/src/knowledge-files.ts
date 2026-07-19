@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 
-import type { VapiKnowledgeProvider } from "@vokli/core";
+import type { VapiKnowledgeProvider } from "../../core/dist/index.js";
 
 import type { KnowledgeIssue } from "./knowledge-types.js";
 

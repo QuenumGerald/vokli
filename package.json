@@ -1,12 +1,33 @@
 {
   "name": "vokli",
-  "version": "0.4.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "type": "module",
   "workspaces": [
     "packages/*",
     "examples/*"
   ],
+  "files": [
+    "README.md",
+    "CHANGELOG.md",
+    "packages/core/dist",
+    "packages/knowledge/dist",
+    "packages/sdk/dist",
+    "packages/testing/dist",
+    "packages/vapi/dist"
+  ],
+  "main": "./packages/sdk/dist/index.js",
+  "types": "./packages/sdk/dist/index.d.ts",
+  "bin": {
+    "vokli": "./packages/sdk/dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./packages/sdk/dist/index.d.ts",
+      "import": "./packages/sdk/dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "engines": {
     "node": ">=22"
   },
@@ -21,7 +42,6 @@
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@types/node": "^22.15.3",
-    "@vokli/sdk": "*",
     "eslint": "^9.25.1",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3",

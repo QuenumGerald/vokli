@@ -1,4 +1,4 @@
-import type { VapiKnowledgeProvider } from "@vokli/core";
+import type { VapiKnowledgeProvider } from "../../core/dist/index.js";
 
 export interface VapiKnowledgeOptions {
   readonly sources: readonly string[];

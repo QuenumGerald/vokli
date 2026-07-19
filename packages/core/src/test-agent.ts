@@ -1,7 +1,7 @@
-import { receptionist } from "./receptionist.js";
+import { agent } from "./receptionist.js";
 
 export function createTestReceptionist() {
-  return receptionist({
+  return agent({
     id: "sample-business",
     business: {
       name: "Sample Business",

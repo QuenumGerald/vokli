@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { agent } from "./index.js";
-import { createVokli } from "@vokli/sdk";
-import { generateReceptionistPrompt } from "@vokli/core";
+import { definition as agent } from "./index.js";
+import { createVokli, generateReceptionistPrompt } from "vokli";
 
 // ─── Agent Structure ─────────────────────────────────────────────────────────
 

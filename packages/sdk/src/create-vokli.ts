@@ -6,14 +6,14 @@ import {
   type AgentDefinition,
   type StructuredOutputDraft,
   type ValidationResult,
-} from "@vokli/core";
+} from "../../core/dist/index.js";
 import {
   generateVapiAssistantConfig,
   createVapiApi,
   type GeneratedVapiResources,
   type VapiApi,
   type VapiGenerationOptions,
-} from "@vokli/vapi";
+} from "../../vapi/dist/index.js";
 import {
   createKnowledgeService,
   readKnowledgeState,
@@ -21,7 +21,7 @@ import {
   type CreateKnowledgeServiceOptions,
   type KnowledgeService,
   type VapiKnowledgeApi,
-} from "@vokli/knowledge";
+} from "../../knowledge/dist/index.js";
 import { VokliValidationError } from "./vokli-validation-error.js";
 
 export interface GeneratedAgent {

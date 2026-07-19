@@ -1,6 +1,6 @@
-import { createVokli, receptionist, vapiKnowledge } from "@vokli/sdk";
+import { createVokli, agent, vapiKnowledge } from "vokli";
 
-const agent = receptionist({
+const definition = agent({
   id: "garage-martin",
   business: {
     name: "Garage Martin",
@@ -59,7 +59,7 @@ const vokli = createVokli({
   },
 });
 
-const validation = vokli.validate(agent);
+const validation = vokli.validate(definition);
 if (!validation.success) {
   console.error(validation.errors);
   process.exitCode = 1;
