@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "@vapi-ai/server-sdk": "1.2.0",
-    "@vokli/core": "workspace:*"
+    "@vokli/core": "*"
   }
 }

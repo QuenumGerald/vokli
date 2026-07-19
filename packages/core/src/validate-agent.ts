@@ -113,6 +113,26 @@ const receptionistSchema: z.ZodType<AgentDefinition> = z.object({
       assistantId: requiredText.optional(),
     })
     .optional(),
+  model: z
+    .object({
+      provider: requiredText,
+      model: requiredText,
+    })
+    .optional(),
+  voice: z
+    .object({
+      provider: requiredText,
+      voiceId: requiredText,
+      model: requiredText.optional(),
+    })
+    .optional(),
+  transcriber: z
+    .object({
+      provider: requiredText,
+      model: requiredText,
+      language: requiredText,
+    })
+    .optional(),
 });
 
 function requiredRulesSchema(

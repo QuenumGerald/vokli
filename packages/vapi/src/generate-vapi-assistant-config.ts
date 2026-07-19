@@ -13,14 +13,22 @@ export interface VapiModelDraft {
   ];
 }
 
+export interface VapiTranscriberDraft {
+  readonly provider: string;
+  readonly model: string;
+  readonly language: string;
+}
+
 export interface VapiVoiceDraft {
   readonly provider: string;
   readonly voiceId: string;
+  readonly model?: string | undefined;
 }
 
 export interface VapiGenerationOptions {
-  readonly model: Omit<VapiModelDraft, "messages">;
-  readonly voice: VapiVoiceDraft;
+  readonly model?: Omit<VapiModelDraft, "messages">;
+  readonly voice?: VapiVoiceDraft;
+  readonly transcriber?: VapiTranscriberDraft;
 }
 
 export interface VapiAssistantDraft {
@@ -28,6 +36,7 @@ export interface VapiAssistantDraft {
   readonly firstMessage: string;
   readonly model: VapiModelDraft;
   readonly voice: VapiVoiceDraft;
+  readonly transcriber?: VapiTranscriberDraft;
 }
 
 export interface GeneratedVapiResources {
@@ -41,17 +50,34 @@ export function generateVapiAssistantConfig(
 ): GeneratedVapiResources {
   const structuredOutput = generateStructuredOutput(agent);
 
+  const modelConfig = agent.model ?? options.model ?? {
+    provider: "openai",
+    model: "gpt-5-mini",
+  };
+
+  const voiceConfig = agent.voice ?? options.voice ?? {
+    provider: "vapi",
+    voiceId: "jessica",
+  };
+
+  const transcriberConfig = agent.transcriber ?? options.transcriber ?? {
+    provider: "soniox",
+    model: "stt-rt-v5",
+    language: "en",
+  };
+
   return {
     assistant: {
       name: agent.id,
       firstMessage: agent.greeting,
       model: {
-        ...options.model,
+        ...modelConfig,
         messages: [
           { role: "system", content: generateReceptionistPrompt(agent) },
         ],
       },
-      voice: { ...options.voice },
+      voice: { ...voiceConfig },
+      transcriber: { ...transcriberConfig },
     },
     structuredOutputs: structuredOutput ? [structuredOutput] : [],
   };

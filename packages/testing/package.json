@@ -17,6 +17,6 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@vokli/core": "workspace:*"
+    "@vokli/core": "*"
   }
 }

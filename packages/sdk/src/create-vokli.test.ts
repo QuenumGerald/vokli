@@ -24,11 +24,11 @@ const validAgent = receptionist({
 });
 
 describe("createVokli", () => {
-  it("supports local validation without options", () => {
+  it("supports local validation and generation without options using default values", () => {
     expect(createVokli().validate(validAgent).success).toBe(true);
-    expect(() => createVokli().generate(validAgent)).toThrow(
-      /model and voice/i,
-    );
+    const generated = createVokli().generate(validAgent);
+    expect(generated.providerConfig.assistant.model.provider).toBe("openai");
+    expect(generated.providerConfig.assistant.voice.provider).toBe("vapi");
   });
 
   it("creates, skips, and updates an assistant using state identity", async () => {

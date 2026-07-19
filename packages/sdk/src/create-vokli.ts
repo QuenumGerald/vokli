@@ -116,14 +116,9 @@ export function createVokli(options: CreateVokliOptions = {}): Vokli {
   const generate = (agent: unknown): GeneratedAgent => {
     const validation = validateAgent(agent);
     if (!validation.success) throw new VokliValidationError(validation.errors);
-    if (!options.vapi)
-      throw new DeploymentError(
-        "generate",
-        "Vapi model and voice configuration is required. Pass createVokli({ vapi: { model, voice } }).",
-      );
     const providerConfig = generateVapiAssistantConfig(
       validation.data,
-      options.vapi,
+      options.vapi ?? {},
     );
     return {
       agent: validation.data,
@@ -229,8 +224,11 @@ export function createVokli(options: CreateVokliOptions = {}): Vokli {
         if (cause instanceof DeploymentError) throw cause;
         const safeCause =
           cause instanceof Error && options.provider?.apiKey
-            ? new Error(
-                cause.message.replaceAll(options.provider.apiKey, "[REDACTED]"),
+            ? Object.assign(
+                new Error(
+                  cause.message.replaceAll(options.provider.apiKey, "[REDACTED]"),
+                ),
+                { cause: (cause as any).cause }
               )
             : cause;
         throw new DeploymentError(

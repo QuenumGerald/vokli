@@ -8,9 +8,9 @@ key, network request, remote resource, or knowledge synchronization is involved.
 From the repository root:
 
 ```bash
-pnpm install
-pnpm build
-pnpm --filter @vokli/example-basic start
+npm install
+npm run build
+npm start -w examples/basic
 ```
 
 To perform a real knowledge synchronization, configure a `VapiKnowledgeApi`

@@ -1,111 +1,89 @@
 import "dotenv/config";
 import { createVokli, receptionist, vapiKnowledge } from "@vokli/sdk";
 
-const agent = receptionist({
-  id: "secretariat-medical-dupont",
+export const agent = receptionist({
+  id: "helpdesk-telecom-b2b",
   business: {
-    name: "Cabinet Médical Dupont & Martin",
-    description: "Cabinet médical de médecine générale et pédiatrie.",
+    name: "Support Informatique et Téléphonie",
+    description: "Service de support technique de premier niveau pour les téléphones IP Yealink et l'accès Internet d'entreprise.",
     language: "fr-FR",
     timezone: "Europe/Paris",
     openingHours: {
-      monday: ["08:30-12:00", "14:00-18:30"],
-      tuesday: ["08:30-12:00", "14:00-18:30"],
-      wednesday: ["08:30-12:00", "14:00-18:30"],
-      thursday: ["08:30-12:00", "14:00-18:30"],
-      friday: ["08:30-12:00", "14:00-17:30"],
+      monday: ["08:00-19:00"],
+      tuesday: ["08:00-19:00"],
+      wednesday: ["08:00-19:00"],
+      thursday: ["08:00-19:00"],
+      friday: ["08:00-19:00"],
     },
   },
-  greeting: "Bonjour, secrétariat médical des Docteurs Dupont et Martin. Comment puis-je vous aider ?",
+  greeting: "Bonjour, bienvenue au support technique. Comment puis-je vous aider aujourd'hui ?",
   collect: {
-    patientName: {
-      label: "Nom du patient",
-      description: "Nom et prénom du patient pour lequel le rendez-vous est demandé.",
+    contactName: {
+      label: "Nom du contact",
+      description: "Nom et prénom de l'interlocuteur en ligne.",
       type: "string",
       required: true,
     },
     phoneNumber: {
-      label: "Numéro de téléphone",
-      description: "Numéro de téléphone pour recontacter le patient.",
+      label: "Numéro de rappel",
+      description: "Numéro de téléphone direct pour recontacter l'utilisateur ou le technicien sur place.",
       type: "string",
       required: true,
     },
-    reason: {
-      label: "Motif de consultation",
-      description: "Description courte du motif (fièvre, certificat, renouvellement, etc.).",
+    equipmentType: {
+      label: "Équipement concerné",
+      description: "Le type de matériel en panne (ex: Téléphone Yealink T46U, Routeur Internet, Wi-Fi).",
       type: "string",
       required: true,
     },
-    isExistingPatient: {
-      label: "Déjà patient du cabinet",
-      description: "Indique si le patient a déjà consulté dans ce cabinet (oui/non).",
+    issueDescription: {
+      label: "Description de la panne",
+      description: "Description du dysfonctionnement constaté par le client.",
       type: "string",
       required: true,
     },
-    preferredPractitioner: {
-      label: "Médecin souhaité",
-      description: "Choix du médecin souhaité (Dr. Dupont, Dr. Martin ou indifférent).",
+    rebootAttempted: {
+      label: "Redémarrage effectué",
+      description: "Indique si l'utilisateur a tenté de redémarrer électriquement l'équipement en panne (oui/non).",
       type: "string",
-      required: false,
+      required: true,
+    },
+    needsTechnician: {
+      label: "Intervention technicien requise",
+      description: "Indique si la panne nécessite le déplacement d'un technicien sur site suite à l'échec de l'auto-dépannage (oui/non).",
+      type: "string",
+      required: true,
     },
   },
-  knowledge: vapiKnowledge({ sources: ["./knowledge/cabinet.md"] }),
+  knowledge: vapiKnowledge({
+    sources: [
+      "./knowledge/support.md",
+      "./knowledge/guide-filaire-guide-yealink-t46u.pdf"
+    ]
+  }),
+  model: {
+    provider: "openai",
+    model: "gpt-5-mini",
+  },
+  voice: {
+    provider: "11labs",
+    voiceId: "21m00Tcm4TlvDq8ikWAM",
+    model: "eleven_multilingual_v2",
+  },
+  transcriber: {
+    provider: "soniox",
+    model: "stt-rt-v5",
+    language: "fr",
+  },
   rules: [
-    "En cas d'urgence vitale, interrompre le patient et lui dire d'appeler le 15 immédiatement.",
-    "Expliquer qu'aucun rendez-vous n'est confirmé directement : une secrétaire humaine rappellera sous 24h pour fixer le rendez-vous.",
-    "Ne jamais inventer d'information tarifaire ou médicale qui n'est pas dans la base de connaissances.",
-    "Pour valider/confirmer les informations collectées, faites-le une seule et unique fois. Par exemple : 'J'ai bien noté vos informations...'. Ne répétez plus jamais ces informations par la suite.",
-    "Après avoir confirmé les informations, demandez immédiatement s'il y a une autre question. Si le patient dit non ou valide, dites simplement au revoir de manière polie et concise, puis cessez de parler en attendant qu'il raccroche.",
-    "Collectez les informations requises de manière progressive : posez TOUJOURS une seule question à la fois.",
-    "Ne demandez jamais plusieurs informations en même temps (ex: ne demandez pas le nom ET le numéro dans la même phrase). Attendez la réponse du patient à chaque question avant de passer à l'information suivante.",
+    "Aider l'utilisateur en priorité en consultant la base de connaissances (ex: lui expliquer étape par étape comment effectuer un transfert d'appel Yealink, ou comment résoudre le message 'Pas de réseau').",
+    "Si le problème est résolu directement grâce à vos explications (ex: l'utilisateur a réussi à faire son transfert d'appel ou son téléphone s'est reconnecté après reboot), terminez l'appel poliment sans demander d'autres informations et sans planifier de technicien. Indiquez 'non' for needsTechnician.",
+    "Si le problème persiste (ex: câble réseau défectueux, pas de tonalité, écran noir, fibre coupée), proposez l'ouverture d'un ticket et le passage d'un technicien, et commencez à collecter les informations requises.",
+    "Collectez les informations requises une seule question à la fois. Ne demandez jamais plusieurs informations en même temps (ex: ne demandez pas le nom ET le numéro dans la même phrase). Attendez la réponse à la question en cours avant de continuer.",
+    "Ne reposez JAMAIS une question à laquelle l'utilisateur a déjà répondu dans la conversation (même sous une autre forme, ou si l'information a été donnée spontanément). Considérez-la comme acquise et passez à l'information suivante.",
+    "Lors de la qualification pour le technicien, demandez systématiquement si un redémarrage électrique de l'appareil a été tenté, et notez-le dans rebootAttempted.",
+    "Ne jamais promettre d'heure exacte de passage pour le technicien. Indiquer une plage horaire de 2 heures (ex: entre 14h et 16h).",
+    "Pour valider/confirmer les informations collectées, faites-le une seule et unique fois à la fin de la qualification de manière synthétique. Ne répétez plus jamais ces informations par la suite.",
+    "Après avoir confirmé les informations, demandez immédiatement s'il y a une autre question. Si le client dit non ou valide, dites simplement au revoir de manière polie et concise, puis cessez de parler en attendant qu'il raccroche.",
   ],
 });
-
-const vokli = createVokli({
-  ...(process.env.VAPI_API_KEY ? {
-    provider: {
-      type: "vapi",
-      apiKey: process.env.VAPI_API_KEY,
-    }
-  } : {}),
-  vapi: {
-    model: { provider: "openai", model: "gpt-4o" },
-    voice: { provider: "azure", voiceId: "fr-FR-DeniseNeural" },
-  },
-});
-
-console.log("=== 1. Validation de l'agent ===");
-const validation = vokli.validate(agent);
-if (!validation.success) {
-  console.error("Erreur de validation :", validation.errors);
-  process.exit(1);
-}
-console.log("L'agent est valide !\n");
-
-console.log("=== 2. Validation des fichiers de connaissances ===");
-const knowledgeValidation = await vokli.knowledge.validate(validation.data);
-if (!knowledgeValidation.success) {
-  console.error("Erreur de connaissances :", knowledgeValidation.errors);
-  process.exit(1);
-}
-console.log("Les fichiers de connaissances sont valides !\n");
-
-console.log("=== 3. Génération du prompt système ===");
-const generated = vokli.generate(validation.data);
-console.log(generated.prompt);
-
-console.log("=== 4. Configuration Vapi générée ===");
-console.dir(generated.providerConfig, { depth: null });
-
-if (process.env.VAPI_API_KEY) {
-  console.log("\n=== 5. Déploiement et Synchronisation de l'agent ===");
-  const deployment = await vokli.deploy(validation.data);
-  console.log("Déploiement réussi ! Assistant ID :", deployment.assistantId);
-
-  console.log("Synchronisation de la base de connaissances...");
-  await vokli.knowledge.sync(validation.data);
-  console.log("Base de connaissances synchronisée avec succès !");
-} else {
-  console.log("\n[INFO] process.env.VAPI_API_KEY non défini. Remplissez le fichier .env pour déployer et synchroniser réellement avec Vapi.");
-}
-

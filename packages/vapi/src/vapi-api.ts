@@ -82,11 +82,15 @@ export function createVapiApi(options: {
             status === 429 ||
             (status !== undefined && status >= 500),
           cause:
-            cause instanceof Error
+            cause instanceof VapiError
               ? new Error(
-                  cause.message.replaceAll(options.apiKey, "[REDACTED]"),
+                  `VapiError (status=${cause.statusCode}): ${JSON.stringify(cause.body || cause.message)}`.replaceAll(options.apiKey, "[REDACTED]")
                 )
-              : undefined,
+              : cause instanceof Error
+                ? new Error(
+                    cause.message.replaceAll(options.apiKey, "[REDACTED]"),
+                  )
+                : undefined,
         },
       );
     }

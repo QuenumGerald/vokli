@@ -27,5 +27,8 @@ export function receptionist(input: ReceptionistInput): ReceptionistDefinition {
           },
         }
       : {}),
+    ...(input.model ? { model: { ...input.model } } : {}),
+    ...(input.voice ? { voice: { ...input.voice } } : {}),
+    ...(input.transcriber ? { transcriber: { ...input.transcriber } } : {}),
   };
 }

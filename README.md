@@ -6,18 +6,33 @@ synchronizing static documents. It is **not yet a complete production voice
 platform**: calls, webhooks, business Tools, transfers, and remote-state
 discovery are not implemented.
 
-## Local use and deployment
+## Quick Demo
+
+To run and deploy the included example agent to Vapi, ensure you have your `VAPI_API_KEY` defined in `examples/secretariat/.env` (see `examples/secretariat/.env.example`), then run from the root:
+
+```bash
+# Install all dependencies across workspaces
+npm install
+
+# Compile the packages and example
+npm run build
+
+# Deploy and sync the agent
+npm start -w examples/secretariat
+```
+
+---
+
+## Local use and deployment (SDK)
 
 ```ts
 import { createVokli, receptionist, vapiKnowledge } from "@vokli/sdk";
 
+// Initialize Vokli (uses Google Gemini and Azure BrigitteNeural defaults automatically)
 const vokli = createVokli({
   provider: { type: "vapi", apiKey: process.env.VAPI_API_KEY! },
-  vapi: {
-    model: { provider: "openai", model: "gpt-4o" },
-    voice: { provider: "vapi", voiceId: "Elliot" },
-  },
 });
+
 const agent = receptionist({
   id: "garage-martin",
   business: {
@@ -28,7 +43,13 @@ const agent = receptionist({
   greeting: "Bonjour, comment puis-je vous aider ?",
   collect: {},
   knowledge: vapiKnowledge({ sources: ["./knowledge/services.md"] }),
+
+  // Custom model, voice, and transcriber overrides
+  model: { provider: "openai", model: "gpt-5-mini" },
+  voice: { provider: "azure", voiceId: "fr-FR-JacquelineNeural" },
+  transcriber: { provider: "soniox", model: "stt-rt-v5", language: "fr" },
 });
+
 const result = await vokli.deploy(agent);
 await vokli.knowledge.sync(agent); // automatically uses result.assistantId
 ```
@@ -69,13 +90,49 @@ remain supported. The legacy `VapiKnowledgeApi` Knowledge Base methods are
 deprecated compatibility shims; implement Query Tool methods for new clients.
 See [the guide](docs/knowledge-base.md).
 
-## Development
+## Command Line Interface (CLI)
+
+Vokli provides a command-line interface to validate, deploy, and synchronize agent configurations without writing deployment scripts.
+
+Ensure your configuration file exports your agent(s) (either as a `default` export or a named export):
+
+```ts
+// vokli.config.ts
+import { receptionist } from "@vokli/sdk";
+
+export const agent = receptionist({
+  id: "helpdesk-telecom-b2b",
+  // ... agent config
+});
+```
+
+Deploy the agent directly:
 
 ```bash
-pnpm install
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm build
-pnpm format:check
+npx vokli deploy vokli.config.ts
+```
+
+### Multiple Agents
+
+If your configuration file exports multiple agents (either in an array or as separate named exports), the CLI handles this:
+- **Interactive selection**: In interactive terminals, it prompts you to select the agent to deploy, deploy all, or cancel.
+- **Specific agent selection**: Use `--agent <id>` or `-a <id>` to deploy only one agent:
+  ```bash
+  npx vokli deploy vokli.config.ts --agent helpdesk-telecom-b2b
+  ```
+- **Deploy all**: Use the `--all` flag to deploy all agents sequentially:
+  ```bash
+  npx vokli deploy vokli.config.ts --all
+  ```
+
+## Development
+
+The project is structured as an npm monorepo. Use the following commands to build, format, lint, and test:
+
+```bash
+npm install
+npm run build
+npm test
+npm run lint
+npm run format
 ```
