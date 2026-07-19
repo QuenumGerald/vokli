@@ -1,6 +1,6 @@
 {
   "name": "volkli-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "type": "module",
   "workspaces": [
@@ -28,6 +28,16 @@
     },
     "./package.json": "./package.json"
   },
+  "keywords": [
+    "vapi",
+    "voice-agent",
+    "ai-agent",
+    "assistant",
+    "typescript",
+    "sdk",
+    "knowledge-base",
+    "call-center"
+  ],
   "engines": {
     "node": ">=22"
   },
