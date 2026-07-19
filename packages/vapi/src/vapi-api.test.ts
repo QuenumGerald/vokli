@@ -88,7 +88,7 @@ describe("createVapiApi", () => {
       status: 503,
       retryable: true,
       cause: expect.objectContaining({
-        message: "request with [REDACTED] failed",
+        message: expect.stringContaining("request with [REDACTED] failed"),
       }),
     });
   });

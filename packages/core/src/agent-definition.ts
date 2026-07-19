@@ -13,6 +13,9 @@ export interface ReceptionistDefinition {
   readonly safetyRules: readonly string[];
   readonly customRules: readonly string[];
   readonly knowledge?: VapiKnowledgeProvider | undefined;
+  readonly model?: { readonly provider: string; readonly model: string } | undefined;
+  readonly voice?: { readonly provider: string; readonly voiceId: string; readonly model?: string | undefined } | undefined;
+  readonly transcriber?: { readonly provider: string; readonly model: string; readonly language: string } | undefined;
 }
 
 export type AgentDefinition = ReceptionistDefinition;
@@ -24,4 +27,7 @@ export interface ReceptionistInput {
   readonly collect?: CollectionDefinition | undefined;
   readonly rules?: readonly string[] | undefined;
   readonly knowledge?: VapiKnowledgeProvider | undefined;
+  readonly model?: { readonly provider: string; readonly model: string } | undefined;
+  readonly voice?: { readonly provider: string; readonly voiceId: string; readonly model?: string | undefined } | undefined;
+  readonly transcriber?: { readonly provider: string; readonly model: string; readonly language: string } | undefined;
 }

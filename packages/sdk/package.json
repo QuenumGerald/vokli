@@ -6,6 +6,9 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "vokli": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -14,11 +17,13 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "postbuild": "chmod +x dist/cli.js",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@vokli/core": "workspace:*",
-    "@vokli/vapi": "workspace:*",
-    "@vokli/knowledge": "workspace:*"
+    "@vokli/core": "*",
+    "@vokli/knowledge": "*",
+    "@vokli/vapi": "*",
+    "jiti": "^2.7.0"
   }
 }

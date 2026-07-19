@@ -6,10 +6,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "start": "node dist/index.js"
+    "start": "vokli deploy dist/index.js",
+    "eval": "tsc -p tsconfig.json && node dist/evals.js"
   },
   "dependencies": {
-    "@vokli/sdk": "workspace:*",
+    "@vokli/sdk": "*",
     "dotenv": "^16.4.5"
   }
 }
