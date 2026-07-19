@@ -1,4 +1,4 @@
-import { createVokli, agent, vapiKnowledge } from "vokli";
+import { createVokli, agent, vapiKnowledge } from "volkli-sdk";
 
 const definition = agent({
   id: "garage-martin",

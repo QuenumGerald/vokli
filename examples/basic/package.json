@@ -9,6 +9,6 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "vokli": "*"
+    "volkli-sdk": "file:../.."
   }
 }

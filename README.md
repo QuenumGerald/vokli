@@ -28,7 +28,7 @@ npm start -w examples/secretariat
 ## Local use and deployment (SDK)
 
 ```ts
-import { createVokli, agent, vapiKnowledge } from "vokli";
+import { createVokli, agent, vapiKnowledge } from "volkli-sdk";
 
 // Initialize Vokli (uses Google Gemini and Azure BrigitteNeural defaults automatically)
 const vokli = createVokli({
@@ -100,7 +100,7 @@ Ensure your configuration file exports your agent(s) (either as a `default` expo
 
 ```ts
 // vokli.config.ts
-import { agent } from "vokli";
+import { agent } from "volkli-sdk";
 
 export const definition = agent({
   id: "helpdesk-telecom-b2b",
