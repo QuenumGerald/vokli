@@ -10,7 +10,7 @@
     "eval": "tsc -p tsconfig.json && node dist/evals.js"
   },
   "dependencies": {
-    "volkli-sdk": "file:../..",
+    "vokli-sdk": "file:../..",
     "dotenv": "^16.4.5"
   }
 }

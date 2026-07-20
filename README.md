@@ -14,7 +14,7 @@ To run and deploy the included example agent to Vapi, ensure you have your `VAPI
 
 ```bash
 # Install all dependencies across workspaces
-npm i volkli-sdk
+npm i vokli-sdk
 
 # Compile the packages and example
 npm run build
@@ -28,7 +28,7 @@ npm start -w examples/secretariat
 ## Local use and deployment (SDK)
 
 ```ts
-import { createVokli, agent, vapiKnowledge } from "volkli-sdk";
+import { createVokli, agent, vapiKnowledge } from "vokli-sdk";
 
 // Initialize Vokli (uses Google Gemini and Azure BrigitteNeural defaults automatically)
 const vokli = createVokli({
@@ -100,7 +100,7 @@ Ensure your configuration file exports your agent(s) (either as a `default` expo
 
 ```ts
 // vokli.config.ts
-import { agent } from "volkli-sdk";
+import { agent } from "vokli-sdk";
 
 export const definition = agent({
   id: "helpdesk-telecom-b2b",
@@ -132,7 +132,7 @@ If your configuration file exports multiple agents (either in an array or as sep
 The project is structured as an npm monorepo. Use the following commands to build, format, lint, and test:
 
 ```bash
-npm i volkli-sdk
+npm i vokli-sdk
 npm run build
 npm test
 npm run lint

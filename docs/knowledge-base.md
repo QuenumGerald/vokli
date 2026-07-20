@@ -25,13 +25,13 @@ remote identity by assistant name.
 Install the public package with:
 
 ```bash
-npm i volkli-sdk
+npm i vokli-sdk
 ```
 
-Then import the SDK from `volkli-sdk`:
+Then import the SDK from `vokli-sdk`:
 
 ```ts
-import { createVokli, agent, vapiKnowledge } from "volkli-sdk";
+import { createVokli, agent, vapiKnowledge } from "vokli-sdk";
 ```
 
 A changed document produces a new remote file; remote file deletion is not
