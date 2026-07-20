@@ -1,8 +1,13 @@
 # Vokli SDK
 
-![Vokli logo](https://raw.githubusercontent.com/QuenumGerald/vokli/main/docs/vokli-logo.png)
+![Vokli logo](docs/vokli-logo.png)
 
 > **Vokli** – a TypeScript SDK to build, configure and deploy voice‑bot assistants on Vapi.
+
+## Badges
+
+[![npm version](https://img.shields.io/npm/v/@vokli/sdk.svg)](https://www.npmjs.com/package/@vokli/sdk)
+[![License](https://img.shields.io/github/license/QuenumGerald/vokli.svg)](https://github.com/QuenumGerald/vokli/blob/main/LICENSE)
 
 ## Install
 
@@ -36,10 +41,11 @@ await createVokli({
 });
 ```
 
-## Documentation
+## Documentation & Examples
 
-Full documentation, API reference and examples are available on GitHub:
-https://github.com/QuenumGerald/vokli
+- **README** (this file) – usage guide
+- **Docs site** – https://github.com/QuenumGerald/vokli/tree/main/docs
+- **Example project** – `examples/secretariat` demonstrates a fully‑functional Yealink help‑desk bot.
 
 ## License
 
